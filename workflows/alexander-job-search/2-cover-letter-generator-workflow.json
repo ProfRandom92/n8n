@@ -1,0 +1,230 @@
+{
+  "name": "Alexander's Job Search Agent - Anschreiben Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Täglich um 08:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "DEINE_GOOGLE_SHEET_ID",
+          "mode": "list",
+          "cachedResultName": "Alexander Job Tracker"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "list",
+          "cachedResultName": "Sheet1"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "NEU"
+            }
+          ]
+        },
+        "options": {
+          "rangeDefinition": "specifyRange",
+          "range": "A:H"
+        }
+      },
+      "id": "read-new-jobs",
+      "name": "Lese neue Jobs aus Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [450, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "DEINE_GOOGLE_CREDENTIALS_ID",
+          "name": "Google Sheets Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generate personalized cover letter for each job\nconst items = $input.all();\nconst coverLetters = [];\n\nfor (const item of items) {\n  const jobTitle = item.json['Job-Titel'] || '';\n  const company = item.json['Firma'] || 'Ihr Unternehmen';\n  const description = (item.json['Beschreibung'] || '').toLowerCase();\n  const score = item.json['Score'] || 5;\n  \n  // Analyze job requirements\n  const isAzure = description.includes('azure');\n  const isDevOps = description.includes('devops') || description.includes('ci/cd');\n  const isZeroTrust = description.includes('zero trust') || description.includes('zero-trust');\n  const isAI = description.includes('ai') || description.includes('copilot') || description.includes('künstliche intelligenz');\n  const isKubernetes = description.includes('kubernetes') || description.includes('container');\n  const isSIEM = description.includes('siem') || description.includes('security information');\n  const isCompliance = description.includes('iso 27001') || description.includes('bsi') || description.includes('compliance');\n  \n  // Build personalized cover letter\n  let coverLetter = `Sehr geehrte Damen und Herren,\\n\\n`;\n  coverLetter += `mit großem Interesse habe ich Ihre Stellenausschreibung für die Position \"${jobTitle}\" gelesen.\\n\\n`;\n  \n  coverLetter += `Als Cloud-Security-Spezialist mit umfangreicher Weiterbildung in Cybersecurity, Microsoft Security Essentials und Generative AI bringe ich genau die Expertise mit, die Sie suchen. `;\n  \n  // Customize based on job requirements\n  if (isAzure) {\n    coverLetter += `Meine fundierte Erfahrung mit Azure Security und nativen Cloud-Security-Lösungen `;\n  } else {\n    coverLetter += `Meine praktische Erfahrung mit Cloud-Security (Azure, AWS) `;\n  }\n  \n  coverLetter += `ermöglichen es mir, Zero-Trust-Konzepte und Security-in-Depth-Strategien erfolgreich umzusetzen.\\n\\n`;\n  \n  coverLetter += `Meine Qualifikationen umfassen:\\n`;\n  \n  // Skill 1: Cloud Security & DevSecOps (always)\n  coverLetter += `• Cloud Security & DevSecOps: Integration von Sicherheitsrichtlinien in CI/CD-Pipelines`;\n  if (isDevOps) {\n    coverLetter += `, praktische Projekterfahrung mit GitHub Actions und automatisierten Security-Tests`;\n  }\n  coverLetter += `\\n`;\n  \n  // Skill 2: AI or Microsoft Security\n  if (isAI) {\n    coverLetter += `• AI-gestützte Security: Microsoft Security Copilot Zertifizierung und praktische Erfahrung mit KI-Agenten für automatisierte Incident Response und Threat Detection\\n`;\n  } else {\n    coverLetter += `• Microsoft Security: Zertifizierungen in Microsoft Security Essentials und Security Copilot`;\n    if (isCompliance) {\n      coverLetter += `, fundierte Kenntnisse von ISO 27001, BSI C5 und Compliance-Frameworks`;\n    }\n    coverLetter += `\\n`;\n  }\n  \n  // Skill 3: DevSecOps or Container Security\n  if (isKubernetes) {\n    coverLetter += `• Container & Kubernetes Security: Erfahrung mit Container-Sicherheit, Image-Scanning und Security-Policies in Kubernetes-Umgebungen\\n`;\n  } else if (isDevOps) {\n    coverLetter += `• DevSecOps-Integration: Praktische Projekterfahrung mit GitHub Actions, Threat Modelling, Security-Automatisierung und SonarQube\\n`;\n  } else {\n    coverLetter += `• Sicherheitsanalyse & Monitoring: Threat-Modelling, Risikoanalysen`;\n    if (isSIEM) {\n      coverLetter += `, Erfahrung mit SIEM-Lösungen und Security-Monitoring`;\n    }\n    coverLetter += `\\n`;\n  }\n  \n  // Skill 4: Communication (always)\n  coverLetter += `• Kommunikation & Teamarbeit: Deutsch (C1), Englisch (Business-Level) und ausgeprägte Teamfähigkeit für die effektive Zusammenarbeit mit DevOps- und Entwicklungsteams\\n\\n`;\n  \n  // Project experience\n  coverLetter += `In aktuellen Projekten habe ich bereits `;\n  if (isDevOps) {\n    coverLetter += `CI/CD-Sicherheitsintegration mit SonarQube und GitHub Actions realisiert`;\n  } else {\n    coverLetter += `Security-Konzepte für Cloud-Infrastrukturen entwickelt`;\n  }\n  if (isAI) {\n    coverLetter += ` sowie AI-gestützte Prototypen für schnellere Incident Response und intelligente Threat-Detection entwickelt.\\n\\n`;\n  } else {\n    coverLetter += ` und Zero-Trust-Architekturen implementiert.\\n\\n`;\n  }\n  \n  // Closing\n  if (score >= 8) {\n    coverLetter += `Die in Ihrer Stellenausschreibung beschriebenen Aufgaben entsprechen exakt meinen Interessen und Qualifikationen. `;\n  }\n  coverLetter += `Gerne überzeuge ich Sie in einem persönlichen Gespräch von meiner Motivation und meinen Fähigkeiten.`;\n  if (description.includes('remote') || description.includes('hybrid')) {\n    coverLetter += ` Die Möglichkeit zur Remote-Arbeit schätze ich sehr und habe bereits erfolgreich in verteilten Teams gearbeitet.`;\n  }\n  coverLetter += `\\n\\n`;\n  \n  coverLetter += `Ich freue mich auf Ihre Rückmeldung!\\n\\n`;\n  coverLetter += `Mit freundlichen Grüßen\\n`;\n  coverLetter += `Alexander Kölnberger\\n`;\n  coverLetter += `Telefon: 0160 9223 4709\\n`;\n  coverLetter += `E-Mail: alexanderkoelnberger@gmail.com`;\n  \n  coverLetters.push({\n    json: {\n      ...item.json,\n      'Anschreiben': coverLetter,\n      'Status': 'BEREIT',\n      'Generiert am': new Date().toISOString()\n    }\n  });\n}\n\nreturn coverLetters;"
+      },
+      "id": "generate-cover-letters",
+      "name": "Generiere Anschreiben",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "DEINE_GOOGLE_SHEET_ID",
+          "mode": "list",
+          "cachedResultName": "Alexander Job Tracker"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "list",
+          "cachedResultName": "Sheet1"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "={{ $json.Status }}",
+            "Anschreiben": "={{ $json.Anschreiben }}"
+          },
+          "matchingColumns": [
+            "Link"
+          ],
+          "schema": [
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Anschreiben",
+              "displayName": "Anschreiben",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Link",
+              "displayName": "Link",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "update-google-sheets",
+      "name": "Aktualisiere Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [850, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "DEINE_GOOGLE_CREDENTIALS_ID",
+          "name": "Google Sheets Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "alexanderkoelnberger@gmail.com",
+        "subject": "=✅ {{ $input.all().length }} Anschreiben für dich generiert!",
+        "emailType": "html",
+        "message": "=<html>\n<body style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333;\">\n  <h2>Hallo Alexander! 👋</h2>\n  <p>Ich habe für <strong>{{ $input.all().length }}</strong> Jobs personalisierte Anschreiben erstellt.</p>\n  \n  <div style=\"background: #f0f9ff; border-left: 4px solid #2563eb; padding: 15px; margin: 20px 0;\">\n    <h3 style=\"margin-top: 0; color: #2563eb;\">📋 Generierte Anschreiben:</h3>\n    <ul style=\"margin: 10px 0;\">\n      {{ $input.all().map((item) => `\n        <li style=\"margin: 8px 0;\">\n          <strong>${item.json['Job-Titel']}</strong> bei ${item.json['Firma']}\n          <span style=\"color: #16a34a; font-weight: bold;\">(Score: ${item.json['Score']}/10)</span>\n        </li>\n      `).join('') }}\n    </ul>\n  </div>\n  \n  <div style=\"background: #fef3c7; border: 2px solid #f59e0b; border-radius: 8px; padding: 15px; margin: 20px 0;\">\n    <h3 style=\"margin-top: 0;\">📝 Nächste Schritte:</h3>\n    <ol style=\"margin: 10px 0;\">\n      <li>Öffne dein Google Sheet</li>\n      <li>Prüfe die generierten Anschreiben</li>\n      <li>Passe sie bei Bedarf individuell an</li>\n      <li>Versende die Bewerbungen (Lebenslauf nicht vergessen!)</li>\n      <li>Markiere Status als \"VERSENDET\" im Sheet</li>\n    </ol>\n  </div>\n  \n  <p style=\"text-align: center; margin: 30px 0;\">\n    <a href=\"https://docs.google.com/spreadsheets/d/DEINE_SHEET_ID\" \n       style=\"display: inline-block; background: #2563eb; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: bold;\">\n      🚀 Zum Google Sheet\n    </a>\n  </p>\n  \n  <hr style=\"margin: 30px 0;\">\n  <p style=\"color: #666; font-size: 0.9em;\">\n    💡 <strong>Tipp:</strong> Die Anschreiben wurden basierend auf den Job-Beschreibungen personalisiert. \n    Je höher der Score, desto besser passt die Stelle zu deinem Profil!\n  </p>\n  <p style=\"font-size: 1.2em; text-align: center;\">Viel Erfolg bei deinen Bewerbungen! 💪</p>\n</body>\n</html>",
+        "options": {}
+      },
+      "id": "send-notification",
+      "name": "Sende Benachrichtigung",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [1050, 300],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "DEINE_GMAIL_CREDENTIALS_ID",
+          "name": "Gmail Account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Täglich um 08:00": {
+      "main": [
+        [
+          {
+            "node": "Lese neue Jobs aus Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lese neue Jobs aus Sheet": {
+      "main": [
+        [
+          {
+            "node": "Generiere Anschreiben",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generiere Anschreiben": {
+      "main": [
+        [
+          {
+            "node": "Aktualisiere Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aktualisiere Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Sende Benachrichtigung",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1.0.0",
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "alexander-cover-letter-gen"
+  },
+  "id": "alexander-cover-letter-generator",
+  "tags": [
+    {
+      "createdAt": "2025-10-05T00:00:00.000Z",
+      "updatedAt": "2025-10-05T00:00:00.000Z",
+      "id": "1",
+      "name": "Job Search"
+    },
+    {
+      "createdAt": "2025-10-05T00:00:00.000Z",
+      "updatedAt": "2025-10-05T00:00:00.000Z",
+      "id": "2",
+      "name": "Automation"
+    }
+  ]
+}

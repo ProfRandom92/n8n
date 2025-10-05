@@ -1,0 +1,433 @@
+{
+  "name": "Alexander's Job Search Agent - Main",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "e1b8c0f0-8b1a-4c1a-9f5a-1a2b3c4d5e6f",
+      "name": "Start",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [250, 300],
+      "webhookId": "",
+      "notesInFlow": false,
+      "notes": "Läuft täglich um 07:00 Uhr",
+      "id": "start-node"
+    },
+    {
+      "parameters": {
+        "url": "https://de.indeed.com/rss?q=cloud+security+engineer&l=remote&radius=50&sort=date"
+      },
+      "id": "rss-feed-1",
+      "name": "RSS Feed 1: Cloud Security Engineer",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [450, 200]
+    },
+    {
+      "parameters": {
+        "url": "https://de.indeed.com/rss?q=devsecops+engineer&l=deutschland&sort=date"
+      },
+      "id": "rss-feed-2",
+      "name": "RSS Feed 2: DevSecOps Engineer",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://de.indeed.com/rss?q=microsoft+security+azure&l=remote&sort=date"
+      },
+      "id": "rss-feed-3",
+      "name": "RSS Feed 3: Microsoft Security",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [450, 400]
+    },
+    {
+      "parameters": {
+        "url": "https://de.indeed.com/rss?q=security+analyst+cloud&l=heidelberg&radius=100&sort=date"
+      },
+      "id": "rss-feed-4",
+      "name": "RSS Feed 4: Security Analyst",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [450, 500]
+    },
+    {
+      "parameters": {
+        "url": "https://de.indeed.com/rss?q=cybersecurity+engineer&l=remote&sort=date"
+      },
+      "id": "rss-feed-5",
+      "name": "RSS Feed 5: Cybersecurity",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [450, 600]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "merge-feeds",
+      "name": "Merge All RSS Feeds",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [650, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "must-have-keywords",
+              "leftValue": "={{ $json.title + ' ' + $json.contentSnippet }}",
+              "rightValue": "cloud security|devsecops|security engineer|azure security|microsoft security|cybersecurity|zero trust|cloud engineer security|information security",
+              "operator": {
+                "type": "string",
+                "operation": "regex",
+                "rightValue": {
+                  "type": "any"
+                }
+              }
+            },
+            {
+              "id": "exclude-junior",
+              "leftValue": "={{ $json.title.toLowerCase() }}",
+              "rightValue": "junior|praktikum|werkstudent|intern|student|ausbildung|entry level",
+              "operator": {
+                "type": "string",
+                "operation": "notRegex"
+              }
+            },
+            {
+              "id": "bonus-keywords",
+              "leftValue": "={{ $json.contentSnippet.toLowerCase() }}",
+              "rightValue": "azure|microsoft 365|devops|ci/cd|kubernetes|remote|hybrid",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "filter-relevant-jobs",
+      "name": "Filter: Nur relevante Jobs",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [850, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Calculate job score based on keywords\nconst items = $input.all();\nconst scoredItems = [];\n\nfor (const item of items) {\n  const title = (item.json.title || '').toLowerCase();\n  const description = (item.json.contentSnippet || '').toLowerCase();\n  const fullText = title + ' ' + description;\n  \n  let score = 5; // Base score\n  \n  // High priority keywords (+2 points each)\n  if (fullText.includes('azure')) score += 2;\n  if (fullText.includes('zero trust') || fullText.includes('zero-trust')) score += 2;\n  if (fullText.includes('cloud security')) score += 2;\n  \n  // Medium priority keywords (+1 point each)\n  if (fullText.includes('devops') || fullText.includes('devsecops')) score += 1;\n  if (fullText.includes('ci/cd') || fullText.includes('pipeline')) score += 1;\n  if (fullText.includes('kubernetes') || fullText.includes('container')) score += 1;\n  if (fullText.includes('microsoft')) score += 1;\n  if (fullText.includes('remote') || fullText.includes('hybrid')) score += 1;\n  if (fullText.includes('ai') || fullText.includes('copilot')) score += 1;\n  \n  // Location bonus\n  if (fullText.includes('heidelberg') || fullText.includes('mannheim') || fullText.includes('karlsruhe')) score += 1;\n  \n  // Cap at 10\n  score = Math.min(score, 10);\n  \n  scoredItems.push({\n    json: {\n      ...item.json,\n      score: score,\n      datum: new Date().toISOString().split('T')[0],\n      status: 'NEU'\n    }\n  });\n}\n\nreturn scoredItems;"
+      },
+      "id": "calculate-score",
+      "name": "Berechne Job-Score",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1050, 400]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "DEINE_GOOGLE_SHEET_ID",
+          "mode": "list",
+          "cachedResultName": "Alexander Job Tracker"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "list",
+          "cachedResultName": "Sheet1"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Datum": "={{ $json.datum }}",
+            "Status": "={{ $json.status }}",
+            "Job-Titel": "={{ $json.title }}",
+            "Firma": "={{ $json.creator || $json.author || 'Unbekannt' }}",
+            "Link": "={{ $json.link }}",
+            "Beschreibung": "={{ $json.contentSnippet.substring(0, 500) }}",
+            "Score": "={{ $json.score }}",
+            "Anschreiben": ""
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Datum",
+              "displayName": "Datum",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Job-Titel",
+              "displayName": "Job-Titel",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Firma",
+              "displayName": "Firma",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Link",
+              "displayName": "Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Beschreibung",
+              "displayName": "Beschreibung",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Score",
+              "displayName": "Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Anschreiben",
+              "displayName": "Anschreiben",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "add-to-google-sheets",
+      "name": "Add to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [1250, 400],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "DEINE_GOOGLE_CREDENTIALS_ID",
+          "name": "Google Sheets Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "alexanderkoelnberger@gmail.com",
+        "subject": "=☀️ {{ $('Merge All RSS Feeds').itemMatching(0).json.count || $input.all().length }} neue Cloud Security Jobs für dich!",
+        "emailType": "html",
+        "message": "=<html>\n<body style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333;\">\n  <h2>Moin Alexander! 👋</h2>\n  <p>Ich habe <strong>{{ $input.all().length }}</strong> neue passende Jobs gefunden:</p>\n  \n  {{ $input.all().map((item, index) => `\n    <div style=\"border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; margin: 15px 0; background: #f9f9f9;\">\n      <h3 style=\"color: #2563eb; margin-top: 0;\">📋 ${item.json.title}</h3>\n      <p><strong>🏢 Firma:</strong> ${item.json.creator || item.json.author || 'Unbekannt'}</p>\n      <p><strong>⭐ Score:</strong> ${item.json.score}/10</p>\n      <p><strong>🔗 Link:</strong> <a href=\"${item.json.link}\" style=\"color: #2563eb;\">${item.json.link}</a></p>\n      \n      <p><strong>💡 WARUM PASST ES:</strong></p>\n      <ul style=\"margin: 5px 0;\">\n        ${item.json.contentSnippet.toLowerCase().includes('azure') ? '<li>✅ Azure/Cloud Security Match</li>' : ''}\n        ${item.json.contentSnippet.toLowerCase().includes('remote') || item.json.contentSnippet.toLowerCase().includes('hybrid') ? '<li>✅ Remote/Hybrid möglich</li>' : ''}\n        ${item.json.contentSnippet.toLowerCase().includes('devops') || item.json.contentSnippet.toLowerCase().includes('ci/cd') ? '<li>✅ DevOps/CI-CD Erfahrung gefragt</li>' : ''}\n        <li>✅ Passt zu deinen Skills: DevSecOps, Zero-Trust, AI</li>\n      </ul>\n      \n      <p><strong>📝 BESCHREIBUNG (Auszug):</strong></p>\n      <p style=\"font-size: 0.9em; color: #666;\">${item.json.contentSnippet.substring(0, 300)}...</p>\n    </div>\n  `).join('') }}\n  \n  <hr style=\"margin: 30px 0;\">\n  <p>👉 <a href=\"https://docs.google.com/spreadsheets/d/DEINE_SHEET_ID\" style=\"color: #2563eb; text-decoration: none; font-weight: bold;\">Öffne dein Google Sheet</a></p>\n  <p style=\"font-size: 1.2em;\">Viel Erfolg! 🚀</p>\n</body>\n</html>",
+        "options": {}
+      },
+      "id": "send-email-notification",
+      "name": "Gmail Benachrichtigung",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [1450, 400],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "DEINE_GMAIL_CREDENTIALS_ID",
+          "name": "Gmail Account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "RSS Feed 1: Cloud Security Engineer",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Feed 2: DevSecOps Engineer",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Feed 3: Microsoft Security",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Feed 4: Security Analyst",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Feed 5: Cybersecurity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Feed 1: Cloud Security Engineer": {
+      "main": [
+        [
+          {
+            "node": "Merge All RSS Feeds",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Feed 2: DevSecOps Engineer": {
+      "main": [
+        [
+          {
+            "node": "Merge All RSS Feeds",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "RSS Feed 3: Microsoft Security": {
+      "main": [
+        [
+          {
+            "node": "Merge All RSS Feeds",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "RSS Feed 4: Security Analyst": {
+      "main": [
+        [
+          {
+            "node": "Merge All RSS Feeds",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "RSS Feed 5: Cybersecurity": {
+      "main": [
+        [
+          {
+            "node": "Merge All RSS Feeds",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Merge All RSS Feeds": {
+      "main": [
+        [
+          {
+            "node": "Filter: Nur relevante Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: Nur relevante Jobs": {
+      "main": [
+        [
+          {
+            "node": "Berechne Job-Score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Berechne Job-Score": {
+      "main": [
+        [
+          {
+            "node": "Add to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add to Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Gmail Benachrichtigung",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1.0.0",
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "alexander-job-search"
+  },
+  "id": "alexander-job-search-main",
+  "tags": [
+    {
+      "createdAt": "2025-10-05T00:00:00.000Z",
+      "updatedAt": "2025-10-05T00:00:00.000Z",
+      "id": "1",
+      "name": "Job Search"
+    },
+    {
+      "createdAt": "2025-10-05T00:00:00.000Z",
+      "updatedAt": "2025-10-05T00:00:00.000Z",
+      "id": "2",
+      "name": "Automation"
+    }
+  ]
+}
