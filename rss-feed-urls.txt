@@ -1,0 +1,94 @@
+# Alexander's RSS Feed URLs - Copy & Paste Ready
+
+## Indeed Deutschland - Cloud Security Jobs
+
+### URL 1 (Cloud Security Engineer):
+https://de.indeed.com/rss?q=cloud+security+engineer&l=remote&radius=50&sort=date
+
+### URL 2 (DevSecOps Engineer):
+https://de.indeed.com/rss?q=devsecops+engineer&l=deutschland&sort=date
+
+### URL 3 (Microsoft Security Specialist):
+https://de.indeed.com/rss?q=microsoft+security+azure&l=remote&sort=date
+
+### URL 4 (Security Analyst):
+https://de.indeed.com/rss?q=security+analyst+cloud&l=heidelberg&radius=100&sort=date
+
+### URL 5 (Cybersecurity Engineer):
+https://de.indeed.com/rss?q=cybersecurity+engineer&l=remote&sort=date
+
+## Alternative Job Boards
+
+### StepStone (Manual Check):
+https://www.stepstone.de/jobs/cloud-security?radius=50&location=Heidelberg
+
+### LinkedIn Jobs (API Format):
+https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=Cloud%20Security%20Engineer&location=Germany&f_TPR=r86400&f_WT=2,3
+
+### Xing Jobs (RSS):
+https://www.xing.com/jobs/search/rss?keywords=cloud+security&location=Deutschland
+
+## Additional Security-Specific Boards
+
+### German Tech Jobs:
+https://germantechjobs.de/jobs/security
+
+### Absolventa IT Security:
+https://www.absolventa.de/jobs/channel/it-sicherheit
+
+### Cybersecurity Jobs:
+https://www.cybersecurityjobs.de
+
+## Usage Instructions
+
+1. **Copy each URL** individually
+2. **Paste into Make.com** RSS modules
+3. **Test URLs** in browser first
+4. **Adjust parameters** if needed:
+   - `radius=50` (distance in km)
+   - `sort=date` (newest first)
+   - `l=remote` (location preference)
+
+## Parameter Reference
+
+### Location Options:
+- `l=remote` - Remote jobs only
+- `l=deutschland` - All of Germany
+- `l=heidelberg` - Specific city
+- `l=neckargemünd` - Your location
+
+### Radius Options:
+- `radius=25` - 25km radius
+- `radius=50` - 50km radius
+- `radius=100` - 100km radius
+
+### Sort Options:
+- `sort=date` - Newest first
+- `sort=relevance` - Most relevant first
+
+### Job Type Options:
+- `f_JT=2` - Full-time only
+- `f_JT=3` - Part-time only
+- `f_JT=2,3` - Both full-time and part-time
+
+## Testing URLs
+
+Before using in Make.com, test each URL:
+1. **Copy URL** to browser
+2. **Check if RSS loads** properly
+3. **Verify job titles** are relevant
+4. **Note any errors** or redirects
+
+## Troubleshooting
+
+### Common Issues:
+- **404 Error:** URL may be outdated
+- **Empty Feed:** No jobs matching criteria
+- **Wrong Jobs:** Adjust search parameters
+- **Rate Limiting:** Add delays between requests
+
+### Solutions:
+- **Update URLs** regularly
+- **Broaden search** terms if needed
+- **Add delays** in Make.com workflow
+- **Use multiple sources** for redundancy
