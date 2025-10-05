@@ -1,0 +1,290 @@
+{
+  "profile": {
+    "name": "Alexander Kölnberger",
+    "email": "alexanderkoelnberger@gmail.com",
+    "phone": "0160 9223 4709",
+    "location": {
+      "city": "Neckargemünd",
+      "state": "Baden-Württemberg",
+      "country": "Deutschland",
+      "nearCities": ["Heidelberg", "Mannheim", "Karlsruhe"],
+      "radius": 100,
+      "remotePreference": true
+    },
+    "level": "Mid-Senior",
+    "experienceYears": "3-5",
+    "languages": {
+      "german": "C1",
+      "english": "Business-Level"
+    }
+  },
+  "expertise": {
+    "primary": [
+      "Cloud Security",
+      "Azure Security",
+      "DevSecOps",
+      "Zero-Trust Architecture",
+      "Microsoft Security"
+    ],
+    "secondary": [
+      "AWS Security",
+      "Kubernetes Security",
+      "CI/CD Security",
+      "Security Automation",
+      "AI Agents"
+    ],
+    "tools": [
+      "Azure Active Directory",
+      "Microsoft Security Copilot",
+      "GitHub Actions",
+      "SonarQube",
+      "Docker",
+      "Kubernetes",
+      "Terraform"
+    ],
+    "certifications": [
+      "Microsoft Security Essentials",
+      "Microsoft Security Copilot",
+      "Cybersecurity Fundamentals",
+      "Cloud Security Specialist",
+      "AI & Generative AI (39 total certificates)"
+    ],
+    "frameworks": [
+      "ISO 27001",
+      "BSI C5",
+      "NIST Cybersecurity Framework",
+      "Zero Trust"
+    ]
+  },
+  "jobSearch": {
+    "targetRoles": [
+      "Cloud Security Engineer",
+      "DevSecOps Engineer",
+      "Security Engineer",
+      "Microsoft Security Specialist",
+      "Azure Security Engineer",
+      "Security Analyst",
+      "Cybersecurity Engineer",
+      "Information Security Engineer"
+    ],
+    "excludeRoles": [
+      "Junior",
+      "Praktikum",
+      "Werkstudent",
+      "Intern",
+      "Student",
+      "Ausbildung"
+    ],
+    "mustHaveKeywords": [
+      "cloud security",
+      "azure",
+      "devsecops",
+      "security engineer",
+      "microsoft security",
+      "zero trust",
+      "cybersecurity"
+    ],
+    "bonusKeywords": [
+      "azure",
+      "microsoft 365",
+      "devops",
+      "ci/cd",
+      "kubernetes",
+      "container security",
+      "siem",
+      "threat modelling",
+      "iso 27001",
+      "bsi c5",
+      "security copilot",
+      "ai",
+      "automation",
+      "remote",
+      "hybrid"
+    ],
+    "excludeKeywords": [
+      "junior",
+      "praktikum",
+      "werkstudent",
+      "intern",
+      "student",
+      "ausbildung",
+      "0-2 jahre",
+      "entry level"
+    ],
+    "preferredCompanySize": [
+      "Startup (< 50)",
+      "Scale-up (50-200)",
+      "Mid-size (200-1000)",
+      "Enterprise (1000+)"
+    ],
+    "preferredIndustries": [
+      "Cloud Services",
+      "Cybersecurity",
+      "SaaS",
+      "FinTech",
+      "Enterprise Software",
+      "Automotive",
+      "Healthcare IT"
+    ]
+  },
+  "rssSources": [
+    {
+      "name": "Indeed - Cloud Security Engineer",
+      "url": "https://de.indeed.com/rss?q=cloud+security+engineer&l=remote&radius=50&sort=date",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "name": "Indeed - DevSecOps Engineer",
+      "url": "https://de.indeed.com/rss?q=devsecops+engineer&l=deutschland&sort=date",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "name": "Indeed - Microsoft Security",
+      "url": "https://de.indeed.com/rss?q=microsoft+security+azure&l=remote&sort=date",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "name": "Indeed - Security Analyst",
+      "url": "https://de.indeed.com/rss?q=security+analyst+cloud&l=heidelberg&radius=100&sort=date",
+      "priority": "medium",
+      "active": true
+    },
+    {
+      "name": "Indeed - Cybersecurity Engineer",
+      "url": "https://de.indeed.com/rss?q=cybersecurity+engineer&l=remote&sort=date",
+      "priority": "medium",
+      "active": true
+    }
+  ],
+  "scoring": {
+    "baseScore": 5,
+    "highPriority": {
+      "points": 2,
+      "keywords": [
+        "azure",
+        "zero trust",
+        "zero-trust",
+        "cloud security"
+      ]
+    },
+    "mediumPriority": {
+      "points": 1,
+      "keywords": [
+        "devops",
+        "devsecops",
+        "ci/cd",
+        "pipeline",
+        "kubernetes",
+        "container",
+        "microsoft",
+        "remote",
+        "hybrid",
+        "ai",
+        "copilot"
+      ]
+    },
+    "locationBonus": {
+      "points": 1,
+      "locations": [
+        "heidelberg",
+        "mannheim",
+        "karlsruhe",
+        "neckargemünd"
+      ]
+    },
+    "maxScore": 10
+  },
+  "coverLetter": {
+    "templates": {
+      "opening": "Sehr geehrte Damen und Herren,\n\nmit großem Interesse habe ich Ihre Stellenausschreibung für die Position \"{jobTitle}\" gelesen.",
+      "introduction": "Als Cloud-Security-Spezialist mit umfangreicher Weiterbildung in Cybersecurity, Microsoft Security Essentials und Generative AI bringe ich genau die Expertise mit, die Sie suchen.",
+      "closing": "Gerne überzeuge ich Sie in einem persönlichen Gespräch von meiner Motivation und meinen Fähigkeiten. Ich freue mich auf Ihre Rückmeldung!\n\nMit freundlichen Grüßen\nAlexander Kölnberger\nTelefon: 0160 9223 4709\nE-Mail: alexanderkoelnberger@gmail.com"
+    },
+    "skills": {
+      "cloudSecurity": "Cloud Security & DevSecOps: Integration von Sicherheitsrichtlinien in CI/CD-Pipelines, Erfahrung mit SonarQube und Schwachstellenanalyse",
+      "microsoftSecurity": "Microsoft Security: Zertifizierungen in Microsoft Security Essentials und Security Copilot, Kenntnisse von ISO 27001 und BSI C5",
+      "aiSecurity": "AI-gestützte Security: Microsoft Security Copilot Zertifizierung und praktische Erfahrung mit KI-Agenten für automatisierte Incident Response",
+      "devSecOps": "DevSecOps-Integration: Praktische Projekterfahrung mit GitHub Actions, Threat Modelling und Sicherheitsautomatisierung",
+      "containerSecurity": "Container & Kubernetes Security: Erfahrung mit Container-Sicherheit, Image-Scanning und Security-Policies in Kubernetes-Umgebungen",
+      "analysis": "Sicherheitsanalyse: Threat-Modelling, Risikoanalysen und technische Umsetzung von Security-Requirements",
+      "communication": "Kommunikation: Deutsch (C1), Englisch (Business-Level) und ausgeprägte Teamfähigkeit für die Zusammenarbeit mit DevOps-Teams"
+    },
+    "projects": [
+      "CI/CD-Sicherheitsintegration mit SonarQube und GitHub Actions",
+      "AI-gestützte Prototypen für schnellere Incident Response",
+      "Zero-Trust-Architekturen Implementierung",
+      "Security-Konzepte für Cloud-Infrastrukturen"
+    ]
+  },
+  "notifications": {
+    "email": {
+      "address": "alexanderkoelnberger@gmail.com",
+      "newJobsSubject": "☀️ {count} neue Cloud Security Jobs für dich!",
+      "coverLettersSubject": "✅ {count} Anschreiben für dich generiert!",
+      "enabled": true
+    },
+    "telegram": {
+      "enabled": false,
+      "botToken": "",
+      "chatId": ""
+    }
+  },
+  "schedule": {
+    "jobSearch": {
+      "time": "07:00",
+      "timezone": "Europe/Berlin",
+      "frequency": "daily"
+    },
+    "coverLetterGeneration": {
+      "time": "08:00",
+      "timezone": "Europe/Berlin",
+      "frequency": "daily"
+    }
+  },
+  "integrations": {
+    "googleSheets": {
+      "enabled": true,
+      "spreadsheetId": "DEINE_GOOGLE_SHEET_ID",
+      "sheetName": "Sheet1",
+      "columns": [
+        "Datum",
+        "Status",
+        "Job-Titel",
+        "Firma",
+        "Link",
+        "Beschreibung",
+        "Score",
+        "Anschreiben"
+      ]
+    },
+    "gmail": {
+      "enabled": true,
+      "account": "alexanderkoelnberger@gmail.com"
+    }
+  },
+  "applicationTracking": {
+    "statuses": [
+      "NEU",
+      "BEREIT",
+      "VERSENDET",
+      "ANTWORT",
+      "INTERVIEW",
+      "SKIP"
+    ],
+    "goals": {
+      "applicationsPerWeek": 15,
+      "responseRateTarget": 0.15,
+      "interviewRateTarget": 0.05
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "createdDate": "2025-10-05",
+    "lastUpdated": "2025-10-05",
+    "author": "n8n Automation",
+    "platform": "n8n"
+  }
+}
