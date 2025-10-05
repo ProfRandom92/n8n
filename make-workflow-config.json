@@ -1,0 +1,144 @@
+{
+  "workflow_name": "Alexander's Cloud Security Job Agent",
+  "description": "Automated job search and application system for Cloud Security positions",
+  "modules": [
+    {
+      "module_type": "RSS",
+      "name": "Indeed Cloud Security Engineer",
+      "config": {
+        "rss_url": "https://de.indeed.com/rss?q=cloud+security+engineer&l=remote&radius=50&sort=date",
+        "max_items": 5,
+        "scheduling": "Every day at 7:00 AM"
+      }
+    },
+    {
+      "module_type": "RSS",
+      "name": "Indeed DevSecOps Engineer",
+      "config": {
+        "rss_url": "https://de.indeed.com/rss?q=devsecops+engineer&l=deutschland&sort=date",
+        "max_items": 5,
+        "scheduling": "Every day at 7:00 AM"
+      }
+    },
+    {
+      "module_type": "RSS",
+      "name": "Indeed Microsoft Security",
+      "config": {
+        "rss_url": "https://de.indeed.com/rss?q=microsoft+security+azure&l=remote&sort=date",
+        "max_items": 5,
+        "scheduling": "Every day at 7:00 AM"
+      }
+    },
+    {
+      "module_type": "RSS",
+      "name": "Indeed Security Analyst",
+      "config": {
+        "rss_url": "https://de.indeed.com/rss?q=security+analyst+cloud&l=heidelberg&radius=100&sort=date",
+        "max_items": 5,
+        "scheduling": "Every day at 7:00 AM"
+      }
+    },
+    {
+      "module_type": "RSS",
+      "name": "Indeed Cybersecurity Engineer",
+      "config": {
+        "rss_url": "https://de.indeed.com/rss?q=cybersecurity+engineer&l=remote&sort=date",
+        "max_items": 5,
+        "scheduling": "Every day at 7:00 AM"
+      }
+    },
+    {
+      "module_type": "Router",
+      "name": "Combine RSS Feeds",
+      "config": {
+        "description": "Routes all RSS feed results to the filter"
+      }
+    },
+    {
+      "module_type": "Filter",
+      "name": "Relevant Jobs Filter",
+      "config": {
+        "conditions": [
+          {
+            "field": "title",
+            "operator": "contains_any",
+            "values": [
+              "Cloud Security",
+              "DevSecOps",
+              "Security Engineer",
+              "Azure Security",
+              "Microsoft Security",
+              "Cybersecurity",
+              "Security Analyst"
+            ]
+          },
+          {
+            "field": "description",
+            "operator": "contains_any",
+            "values": [
+              "Azure",
+              "AWS",
+              "Zero Trust",
+              "DevOps",
+              "CI/CD",
+              "Remote",
+              "Cloud",
+              "Security"
+            ]
+          },
+          {
+            "field": "title",
+            "operator": "not_contains_any",
+            "values": [
+              "Junior",
+              "Praktikum",
+              "Werkstudent",
+              "Intern",
+              "Student",
+              "Ausbildung"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "module_type": "Google_Sheets",
+      "name": "Add Job to Sheet",
+      "config": {
+        "action": "add_row",
+        "spreadsheet_id": "YOUR_SHEET_ID_HERE",
+        "sheet_name": "Sheet1",
+        "column_mapping": {
+          "A": "{{now}}",
+          "B": "NEU",
+          "C": "{{title}}",
+          "D": "{{author}}",
+          "E": "{{link}}",
+          "F": "{{substring(description, 0, 500)}}",
+          "G": "8",
+          "H": "Wird generiert"
+        }
+      }
+    },
+    {
+      "module_type": "Gmail",
+      "name": "Job Notification",
+      "config": {
+        "to": "alexanderkoelnberger@gmail.com",
+        "subject": "☀️ Neue Cloud Security Jobs für dich!",
+        "body": "Moin Alexander!\n\nIch habe {{count}} neue passende Jobs gefunden:\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📋 JOB: {{title}}\n🏢 FIRMA: {{author}}\n🔗 LINK: {{link}}\n\n💡 WARUM PASST ES:\n- Azure/Cloud Security Match\n- Remote/Hybrid möglich\n- Deine Skills: DevSecOps, Zero-Trust, AI\n\n📝 BESCHREIBUNG (Auszug):\n{{substring(description, 0, 300)}}...\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n👉 Öffne dein Google Sheet:\nhttps://docs.google.com/spreadsheets/d/YOUR_SHEET_ID\n\nViel Erfolg! 🚀"
+      }
+    }
+  ],
+  "setup_instructions": [
+    "1. Create Make.com account (free tier: 1000 operations/month)",
+    "2. Create new scenario",
+    "3. Add RSS modules for each job search URL",
+    "4. Add Router to combine all feeds",
+    "5. Add Filter with keyword conditions",
+    "6. Add Google Sheets module (connect your account)",
+    "7. Add Gmail module for notifications",
+    "8. Test the workflow",
+    "9. Activate the scenario"
+  ]
+}

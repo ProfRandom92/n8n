@@ -1,0 +1,120 @@
+# Alexander's Gmail Templates for Job Applications
+
+## Template 1: Standard Application Email
+
+Subject: Bewerbung als [JOB_TITEL] - Alexander Kölnberger
+
+Sehr geehrte Damen und Herren,
+
+[ANSCHREIBEN AUS GOOGLE SHEET EINFÜGEN]
+
+Im Anhang finden Sie meinen ausführlichen Lebenslauf.
+
+Für Rückfragen stehe ich Ihnen gerne zur Verfügung.
+
+Mit freundlichen Grüßen
+
+Alexander Kölnberger
+Neckargemünd, Deutschland
+Telefon: 0160 9223 4709
+E-Mail: alexanderkoelnberger@gmail.com
+
+LinkedIn: [DEIN_LINKEDIN_PROFIL]
+Zertifikate: 39 (Microsoft Security, AI, Cybersecurity)
+
+---
+
+## Template 2: Quick Application (for high-score jobs)
+
+Subject: Cloud Security Engineer - Alexander Kölnberger
+
+Hallo [FIRMA_NAME],
+
+gerade Ihre Stellenausschreibung für Cloud Security Engineer gesehen - das passt perfekt zu meinem Profil!
+
+Meine Highlights:
+✅ Azure Security & DevSecOps Expertise
+✅ Microsoft Security Copilot zertifiziert
+✅ AI-gestützte Security Automation
+✅ 39 Zertifikate in Cybersecurity
+
+Lebenslauf im Anhang. Gerne sprechen wir über eine Zusammenarbeit!
+
+Beste Grüße
+Alexander Kölnberger
+0160 9223 4709
+
+---
+
+## Template 3: Follow-up Email
+
+Subject: Nachfrage zu meiner Bewerbung als [JOB_TITEL]
+
+Sehr geehrte Damen und Herren,
+
+vor [X] Tagen habe ich mich bei Ihnen als [JOB_TITEL] beworben.
+
+Falls Sie noch Fragen zu meiner Bewerbung haben oder weitere Unterlagen benötigen, stehe ich gerne zur Verfügung.
+
+Ich freue mich auf Ihre Rückmeldung.
+
+Mit freundlichen Grüßen
+Alexander Kölnberger
+
+---
+
+## Template 4: Interview Confirmation
+
+Subject: Bestätigung Interview [DATUM] - [JOB_TITEL]
+
+Hallo [NAME],
+
+vielen Dank für die Einladung zum Interview!
+
+Termin: [DATUM] um [UHRZEIT]
+Format: [Remote/Vor Ort]
+Dauer: [X] Minuten
+
+Ich freue mich auf unser Gespräch und bin gespannt, mehr über die Position und Ihr Team zu erfahren.
+
+Beste Grüße
+Alexander Kölnberger
+
+---
+
+## Gmail Canned Responses Setup:
+
+1. Öffne Gmail
+2. Gehe zu Einstellungen (Zahnrad)
+3. Klicke auf "Erweiterte Funktionen"
+4. Aktiviere "Canned Responses"
+5. Erstelle neue Antworten mit den Templates oben
+6. Speichere als:
+   - "Job Application Standard"
+   - "Job Application Quick"
+   - "Follow-up Email"
+   - "Interview Confirmation"
+
+## Gmail Labels für Organisation:
+
+Erstelle diese Labels in Gmail:
+- 📋 Job Applications
+- ⏳ Pending Response
+- ✅ Interview Scheduled
+- ❌ Rejected
+- 💼 Job Offers
+- 📞 Follow-up Needed
+
+## Automatische Filter:
+
+Filter 1: Job Application Responses
+- Von: contains "noreply" OR "jobs" OR "careers"
+- Aktion: Label "Job Applications", Weiterleitung an "alexanderkoelnberger@gmail.com"
+
+Filter 2: Interview Invitations
+- Betreff: contains "interview" OR "Gespräch" OR "Termin"
+- Aktion: Label "Interview Scheduled", Markiere als wichtig
+
+Filter 3: Rejections
+- Betreff: contains "leider" OR "nicht" OR "danke"
+- Aktion: Label "Rejected", Archivieren

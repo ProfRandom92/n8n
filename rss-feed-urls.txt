@@ -1,0 +1,157 @@
+# Alexander's RSS Feed URLs for Job Search
+
+## Indeed Deutschland - Cloud Security Jobs
+
+### URL 1: Cloud Security Engineer (Remote)
+```
+https://de.indeed.com/rss?q=cloud+security+engineer&l=remote&radius=50&sort=date
+```
+**Keywords:** Cloud Security Engineer, Remote, Deutschland
+**Expected jobs:** 5-10 per day
+
+### URL 2: DevSecOps Engineer (Deutschland)
+```
+https://de.indeed.com/rss?q=devsecops+engineer&l=deutschland&sort=date
+```
+**Keywords:** DevSecOps, CI/CD Security, Deutschland
+**Expected jobs:** 3-7 per day
+
+### URL 3: Microsoft Security Specialist (Remote)
+```
+https://de.indeed.com/rss?q=microsoft+security+azure&l=remote&sort=date
+```
+**Keywords:** Microsoft Security, Azure, Remote
+**Expected jobs:** 4-8 per day
+
+### URL 4: Security Analyst (Heidelberg Region)
+```
+https://de.indeed.com/rss?q=security+analyst+cloud&l=heidelberg&radius=100&sort=date
+```
+**Keywords:** Security Analyst, Cloud, Heidelberg, 100km radius
+**Expected jobs:** 2-5 per day
+
+### URL 5: Cybersecurity Engineer (Remote)
+```
+https://de.indeed.com/rss?q=cybersecurity+engineer&l=remote&sort=date
+```
+**Keywords:** Cybersecurity Engineer, Remote, Deutschland
+**Expected jobs:** 3-6 per day
+
+---
+
+## Alternative Job Sources
+
+### StepStone (Manual Check)
+```
+https://www.stepstone.de/jobs/cloud-security?radius=50&location=Heidelberg
+```
+**Note:** No direct RSS feed available, check manually or use web scraping
+
+### LinkedIn Jobs (API Format)
+```
+https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=Cloud%20Security%20Engineer&location=Germany&f_TPR=r86400&f_WT=2,3
+```
+**Note:** Requires LinkedIn API access or web scraping
+
+### Xing Jobs (RSS Available)
+1. Go to xing.com/jobs
+2. Search for "Cloud Security"
+3. Set filters: Remote, Deutschland, 2-5 Jahre
+4. Click "RSS Feed" button
+5. Copy generated URL
+
+---
+
+## RSS Feed Testing
+
+### Test URLs in Browser
+Copy any URL above and paste in browser to verify:
+- Feed loads correctly
+- Contains recent job postings
+- XML format is valid
+
+### Expected XML Structure
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Indeed Jobs</title>
+    <item>
+      <title>Cloud Security Engineer - SAP</title>
+      <link>https://de.indeed.com/viewjob?jk=...</link>
+      <description>Job description...</description>
+      <author>SAP</author>
+      <pubDate>Mon, 06 Jan 2025 10:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
+```
+
+---
+
+## Make.com Configuration
+
+### RSS Module Settings
+- **Module Type:** RSS - Watch RSS Feed Items
+- **RSS Feed URL:** [Use URLs above]
+- **Max Items:** 5 (to stay within free tier limits)
+- **Scheduling:** Every day at 7:00 AM
+- **Timeout:** 30 seconds
+
+### Router Configuration
+- **Module Type:** Router
+- **Purpose:** Combine all 5 RSS feeds
+- **Output:** Single stream of all job items
+
+### Filter Configuration
+- **Module Type:** Tools - Filter
+- **Conditions:** See filter rules in main documentation
+- **Purpose:** Only pass relevant jobs to Google Sheets
+
+---
+
+## Monitoring RSS Feeds
+
+### Daily Checks
+1. **Feed Health:** Verify all 5 feeds are working
+2. **Job Volume:** Check if expected number of jobs found
+3. **Quality:** Review if filter is catching right jobs
+4. **Duplicates:** Ensure no duplicate jobs in sheet
+
+### Weekly Optimization
+1. **Add new keywords** based on job market trends
+2. **Remove ineffective feeds** if they don't produce results
+3. **Adjust location filters** based on job availability
+4. **Test new job sources** for better coverage
+
+### Troubleshooting RSS Issues
+- **Feed not updating:** Check if Indeed changed URL format
+- **No jobs found:** Verify search terms are still relevant
+- **XML errors:** Test feed URL directly in browser
+- **Timeout errors:** Increase timeout in Make.com settings
+
+---
+
+## Expected Results
+
+### Daily Job Volume
+- **Total jobs found:** 15-35 per day
+- **After filtering:** 5-15 relevant jobs
+- **High-score jobs (8+):** 2-5 per day
+- **Applications sent:** 2-3 per day
+
+### Weekly Totals
+- **Jobs processed:** 100-200 per week
+- **Applications sent:** 15-20 per week
+- **Interviews scheduled:** 2-5 per week
+- **Job offers:** 0.5-1 per week (realistic expectation)
+
+### Success Metrics
+- **Application rate:** 10-15% of found jobs
+- **Response rate:** 20-30% of applications
+- **Interview rate:** 10-20% of responses
+- **Offer rate:** 20-40% of interviews
+
+---
+
+*These RSS feeds are specifically optimized for Alexander's Cloud Security profile and location preferences.*
